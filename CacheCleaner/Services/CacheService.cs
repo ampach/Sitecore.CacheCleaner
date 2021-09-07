@@ -74,13 +74,14 @@
             }
             catch(Exception ex) {
                 throw new Exception($"Faild to clear cache of {databaseName} database. Message: {ex.Message}", ex);
-            }           
-
-        } public static bool ClearSitecoreCache(string databaseName)
+            }  
+        } 
+        
+        
+        public static bool ClearSitecoreCache(string databaseName)
         {
             try
             {
-                
                 var database = Sitecore.Configuration.Factory.GetDatabase(databaseName);
 
                 if (database == null)
@@ -98,10 +99,17 @@
 
         }
 
-        public static bool ClearSiteCache(SiteContext site)
+        public static bool ClearSiteCache(string siteName)
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(siteName))
+                {
+                    throw new Exception("siteName is null or empty");
+                }
+
+                var site = Sitecore.Configuration.Factory.GetSite(siteName);
+                
                 if (site == null)
                 {
                     throw new Exception("site is null");

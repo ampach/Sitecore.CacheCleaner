@@ -13,6 +13,9 @@ using Sitecore.Services.Infrastructure.Web.Http;
 
 namespace CacheCleaner.Controllers
 {
+    using Sitecore.Services.Infrastructure.Security;
+
+    [RequiredApiKey]
     public class CacheCleanerController : ServicesApiController
     {
         [HttpPost]
@@ -40,6 +43,24 @@ namespace CacheCleaner.Controllers
             {
                 Services.CacheService.ClearDatabaseLevelCache(database);
                 Services.CacheService.ClearSitecoreCache(database);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception exception)
+            {
+                var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                httpResponseMessage.Content = new StringContent(
+                    JsonConvert.SerializeObject(exception.Message),
+                    System.Text.Encoding.UTF8, "application/json");
+                return httpResponseMessage;
+            }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage ClearSiteCache([FromBody]string site)
+        {
+            try
+            {
+                Services.CacheService.ClearSiteCache(site);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception exception)
