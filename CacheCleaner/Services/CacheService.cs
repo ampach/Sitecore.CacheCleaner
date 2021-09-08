@@ -22,6 +22,20 @@
             }
             
         }
+        public static bool ClearDictionaryCache()
+        {
+            try
+            {
+                Sitecore.Globalization.Translate.ResetCache(true);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Faild to clear all cache. Message: {ex.Message}", ex);
+            }
+            
+        }
 
         public static bool ClearItemLevelCache(ID id, string database)
         {

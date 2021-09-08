@@ -77,6 +77,24 @@ namespace CacheCleaner.Controllers
         }
 
         [HttpPost]
+        public HttpResponseMessage ClearDictionaryCache()
+        {
+            try
+            {
+                Services.CacheService.ClearDictionaryCache();
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception exception)
+            {
+                var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                httpResponseMessage.Content = new StringContent(
+                    JsonConvert.SerializeObject(exception.Message),
+                    System.Text.Encoding.UTF8, "application/json");
+                return httpResponseMessage;
+            }
+        }
+
+        [HttpPost]
         public HttpResponseMessage ClearItemCacheByPath([FromBody] ItemCacheCleanRequestModel model)
         {
             try

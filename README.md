@@ -18,6 +18,18 @@ $endpoint = 'https://$(SITECORE_SITE_DOMAIN)/api/management/cache/ClearAllCache?
 Invoke-RestMethod -Method POST -ContentType 'application/json' -Uri "$endpoint"
 ```
 
+## ClearDictionaryCache
+
+The ClearAllCache method is available by the following path: `/api/management/cache/ClearDictionaryCache?sc_apikey={SITECORE_API_KEY}`
+
+It clears Sitecore Dictionary cache.
+
+```powershell
+$endpoint = 'https://$(SITECORE_SITE_DOMAIN)/api/management/cache/ClearDictionaryCache?sc_apikey={SITECORE_API_KEY}'
+
+Invoke-RestMethod -Method POST -ContentType 'application/json' -Uri "$endpoint"
+```
+
 ## ClearDatabaseCache
 
 The ClearAllCache method is available by the following path: `/api/management/cache/ClearDatabaseCache?sc_apikey={SITECORE_API_KEY}`
