@@ -44,3 +44,26 @@ $site = 'website'
 $json = "$database" | ConvertTo-Json
 Invoke-RestMethod -Method POST -ContentType 'application/json' -Uri "$endpoint" -body $site
 ```
+
+## ClearItemCacheByPath
+
+Method requires two `[string] path` and `[string] database` parameters passed in request body. It clears all item-related caches.
+
+```powershell
+$endpoint = 'https://$(CM_SITE_DOMAIN)/api/management/cache/ClearItemCacheByPath?sc_apikey={SITECORE_API_KEY}'
+
+$postParams = @{item='/sitecore/content'; database='master'}
+Invoke-WebRequest -Method POST -Uri "$endpoint" -body $postParams
+```
+
+## ClearItemCacheByID
+
+Method requires the `[string] id` and `[string] database` parameter passed in request body. It clears all site-related caches.
+
+```powershell
+$endpoint = 'https://$(CM_SITE_DOMAIN)/api/management/cache/ClearItemCacheByID?sc_apikey={SITECORE_API_KEY}'
+
+$postParams = @{item='{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}'; database='master'}
+Invoke-WebRequest -Method POST -Uri "$endpoint" -body $postParams
+```
+
