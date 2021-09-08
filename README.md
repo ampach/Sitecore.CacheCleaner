@@ -2,7 +2,7 @@
 
 CacheCleaner is a simple Sitecore module which is served to parge a vaious Sitecore caches via POST request to the API. This module will help you to build your CI/CD pipelines, for example, in case of restoring databases from backups on fly during Blue/Green deployments or on case of programmatically uploading a batch of items in the Event Disabling mode. On those cases, we need to Purge (Clean) cache to see changes.
 
-The module can be download [here](Sitecore%20Packages/CacheCleaner-1.0.zip)
+The module can be downloaded [here](Sitecore%20Packages/CacheCleaner-1.0.zip)
 
 There are three available methods to clear cache:
 
