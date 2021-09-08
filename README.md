@@ -67,4 +67,4 @@ $postParams = @{item='{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}'; database='master'
 Invoke-WebRequest -Method POST -Uri "$endpoint" -body $postParams
 ```
 
-The API utilizes the API Key mechanism provided by [Sitecore Services Client (SSC)](https://doc.sitecore.com/en/developers/101/sitecore-experience-manager/api-keys-for-the-odata-item-service.html). You'll need to create an API Key and put its Item ID for the requests.
+> The API utilizes the API Key mechanism provided by [Sitecore Services Client (SSC)](https://doc.sitecore.com/en/developers/101/sitecore-experience-manager/api-keys-for-the-odata-item-service.html). You'll need to create an API Key and put its Item ID for the requests.
