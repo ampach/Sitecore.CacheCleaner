@@ -3,6 +3,7 @@
     using System;
 
     using Sitecore.Caching;
+    using Sitecore.Data;
     using Sitecore.Sites;
 
     public static class CacheService
@@ -22,10 +23,55 @@
             
         }
 
+        public static bool ClearItemLevelCache(ID id, string database)
+        {
+            try
+            {
+                var db = Sitecore.Configuration.Factory.GetDatabase(database);
+
+                if (database == null)
+                {
+                    throw new Exception("Database is not found");
+                }
+
+                var item = db.GetItem(id);
+
+                return ClearItemLevelCache(item);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Faild to clear Item cache. Message: {ex.Message}", ex);
+            }
+
+        }
+
+        public static bool ClearItemLevelCache(string path, string database)
+        {
+            try
+            {
+                var db = Sitecore.Configuration.Factory.GetDatabase(database);
+
+                if (database == null)
+                {
+                    throw new Exception("Database is not found");
+                }
+
+                var item = db.GetItem(path);
+
+                return ClearItemLevelCache(item);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Faild to clear Item cache. Message: {ex.Message}", ex);
+            }
+
+        }
+
         public static bool ClearItemLevelCache(Sitecore.Data.Items.Item item)
         {
             try
             {
+
                 if (item == null)
                 {
                     throw new Exception("Item is null");

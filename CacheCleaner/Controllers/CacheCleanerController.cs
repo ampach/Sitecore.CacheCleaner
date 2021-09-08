@@ -13,6 +13,9 @@ using Sitecore.Services.Infrastructure.Web.Http;
 
 namespace CacheCleaner.Controllers
 {
+    using Models;
+
+    using Sitecore.Data;
     using Sitecore.Services.Infrastructure.Security;
 
     [RequiredApiKey]
@@ -61,6 +64,49 @@ namespace CacheCleaner.Controllers
             try
             {
                 Services.CacheService.ClearSiteCache(site);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception exception)
+            {
+                var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                httpResponseMessage.Content = new StringContent(
+                    JsonConvert.SerializeObject(exception.Message),
+                    System.Text.Encoding.UTF8, "application/json");
+                return httpResponseMessage;
+            }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage ClearItemCacheByPath([FromBody] ItemCacheCleanRequestModel model)
+        {
+            try
+            {
+                Services.CacheService.ClearItemLevelCache(model.Item, model.Database);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception exception)
+            {
+                var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                httpResponseMessage.Content = new StringContent(
+                    JsonConvert.SerializeObject(exception.Message),
+                    System.Text.Encoding.UTF8, "application/json");
+                return httpResponseMessage;
+            }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage ClearItemCacheByID([FromBody] ItemCacheCleanRequestModel model)
+        {
+            try
+            {
+                ID itemId;
+                if (!ID.TryParse(model.Item, out itemId))
+                {
+                    throw new Exception("if format is wrong");
+                }
+
+                Services.CacheService.ClearItemLevelCache(itemId, model.Database);
+
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception exception)
